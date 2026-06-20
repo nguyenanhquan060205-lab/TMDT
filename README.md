@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# HUIT-Shop - Nền tảng Thương mại Điện tử
 
-## Getting Started
+Chào mừng bạn đến với **HUIT-Shop**, một dự án thương mại điện tử hiện đại được xây dựng với Next.js và Node.js.
 
-First, run the development server:
+## Cấu trúc Dự án
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- `/frontend`: Chứa mã nguồn giao diện (Next.js 15+, Tailwind CSS v4).
+- `/backend`: Chứa mã nguồn máy chủ (Express, MongoDB, TypeScript).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Hướng dẫn Chạy Dự án
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Để chạy toàn bộ hệ thống, bạn cần thực hiện theo các bước sau:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 1. Khởi động Backend
 
-## Learn More
+Máy chủ Backend xử lý các API về xác thực, sản phẩm và giỏ hàng.
 
-To learn more about Next.js, take a look at the following resources:
+1. Mở terminal và di chuyển vào thư mục backend:
+   ```bash
+   cd backend
+   ```
+2. Cài đặt các thư viện cần thiết:
+   ```bash
+   npm install
+   ```
+3. Tạo file `.env` trong thư mục `backend/` và cấu hình các biến môi trường:
+   ```env
+   PORT=5000
+   MONGODB_URI=your_mongodb_connection_string
+   JWT_SECRET=your_secret_key
+   ```
+4. Chạy backend ở chế độ phát triển:
+   ```bash
+   npm run dev
+   ```
+   *Máy chủ sẽ chạy tại: http://localhost:5000*
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 2. Khởi động Frontend
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Giao diện người dùng được xây dựng để tương tác trực tiếp với API từ Backend.
 
-## Deploy on Vercel
+1. Mở một terminal mới tại thư mục gốc của dự án.
+2. Cài đặt các thư viện:
+   ```bash
+   npm install
+   ```
+3. Chạy giao diện ở chế độ phát triển:
+   ```bash
+   npm run dev
+   ```
+   *Giao diện sẽ chạy tại: http://localhost:3000*
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Các Tính năng Đã Hoàn thiện
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [x] Giao diện Trang chủ hiện đại, responsive.
+- [x] Hệ thống xác thực (Đăng ký, Đăng nhập) kết nối Backend.
+- [x] Hiển thị danh sách sản phẩm thực tế từ Database.
+- [x] Tìm kiếm sản phẩm thời gian thực.
+- [x] Xem chi tiết sản phẩm và Giỏ hàng (Giao diện).
+
+## Công nghệ Sử dụng
+
+- **Frontend**: Next.js 15 (App Router), Tailwind CSS v4, Lucide React, Shadcn UI patterns.
+- **Backend**: Node.js, Express, MongoDB (Mongoose), JWT, TypeScript.
+
+---
+Dự án được thực hiện bởi Nhóm Đồ án HUIT.
