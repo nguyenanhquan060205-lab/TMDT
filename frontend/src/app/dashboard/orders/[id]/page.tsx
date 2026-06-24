@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { use, useEffect, useState } from "react"
 import Link from "next/link"
 import { ArrowLeft, Loader2, MapPin, Phone, Package, CreditCard, Truck } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -36,8 +36,8 @@ interface Order {
     createdAt: string
 }
 
-export default function OrderDetailPage({ params }: { params: { id: string } }) {
-    const { id } = params
+export default function OrderDetailPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = use(params)
     const [order, setOrder] = useState<Order | null>(null)
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState("")

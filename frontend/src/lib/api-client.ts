@@ -1,4 +1,11 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
+
+function buildApiUrl(endpoint: string) {
+  const baseUrl = API_URL.endsWith('/') ? API_URL.slice(0, -1) : API_URL;
+  const path = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+
+  return `${baseUrl}${path}`;
+}
 
 export async function apiRequest(endpoint: string, options: RequestInit = {}) {
   // Lấy token từ localStorage nếu có đăng nhập
@@ -12,18 +19,25 @@ export async function apiRequest(endpoint: string, options: RequestInit = {}) {
     ...options.headers,
   };
 
-  // Gửi request đến API server
-  const response = await fetch(`${API_URL}${endpoint}`, {
-    ...options,
-    headers,
-  });
+  const url = buildApiUrl(endpoint);
+  let response: Response;
 
-  // Parse JSON response
-  const data = await response.json();
+  try {
+    // Gửi request đến API server
+    response = await fetch(url, {
+      ...options,
+      headers,
+    });
+  } catch {
+    throw new Error(`Cannot connect to API server at ${url}. Please make sure the backend is running.`);
+  }
+
+  const contentType = response.headers.get('content-type') || '';
+  const data = contentType.includes('application/json') ? await response.json() : null;
 
   // Kiểm tra lỗi - nếu status code không ok (2xx) thì throw error
   if (!response.ok) {
-    throw new Error(data.message || 'An error occurred!');
+    throw new Error(data?.message || `API request failed with status ${response.status}`);
   }
 
   return data;

@@ -1,0 +1,15 @@
+# backend/.dockerignore
+# ======================================================
+# Mục đích: Loại trừ file không cần thiết khi build Docker
+# Giúp image nhẹ hơn, build nhanh hơn
+# ======================================================
+
+node_modules
+dist
+.env
+.env.*
+.git
+.gitignore
+*.md
+Dockerfile
+.dockerignore

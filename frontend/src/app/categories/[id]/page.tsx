@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { use, useEffect, useState } from "react"
 import { apiRequest } from "@/lib/api-client"
 import { ProductCard } from "@/components/shared/product-card"
 
@@ -11,8 +11,8 @@ interface Product {
     hinhAnh: string[]
 }
 
-export default function CategoryDetailPage({ params }: { params: { id: string } }) {
-    const { id } = params
+export default function CategoryDetailPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = use(params)
     const [products, setProducts] = useState<Product[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState("")

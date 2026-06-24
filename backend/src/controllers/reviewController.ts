@@ -17,14 +17,14 @@ export const createReview = async (req: any, res: Response) => {
         })
 
         if (!hasBought) {
-            res.status(400).json({ message: 'Bạn chỉ có thể đánh giá sản phẩm sau khi đã mua và nhận hàng thành công!' })
+            res.status(400).json({ message: 'You can review this product only after your order has been delivered.' })
             return
         }
 
         // 2. Kiểm tra xem đã đánh giá chưa
         const alreadyReviewed = await Review.findOne({ user: userId, product: productId })
         if (alreadyReviewed) {
-            res.status(400).json({ message: 'Bạn đã đánh giá sản phẩm này rồi!' })
+            res.status(400).json({ message: 'You have already reviewed this product.' })
             return
         }
 
@@ -46,9 +46,9 @@ export const createReview = async (req: any, res: Response) => {
             tongDanhGia
         })
 
-        res.status(201).json({ message: 'Cảm ơn bạn đã đánh giá!', review })
+        res.status(201).json({ message: 'Thank you for your review.', review })
     } catch (error) {
-        res.status(500).json({ message: 'Lỗi server!', error })
+        res.status(500).json({ message: 'Server error.', error })
     }
 }
 
@@ -60,6 +60,6 @@ export const getProductReviews = async (req: Request, res: Response) => {
             .sort({ createdAt: -1 })
         res.json(reviews)
     } catch (error) {
-        res.status(500).json({ message: 'Lỗi server!', error })
+        res.status(500).json({ message: 'Server error.', error })
     }
 }

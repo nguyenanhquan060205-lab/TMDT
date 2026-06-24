@@ -9,6 +9,7 @@ import cartRoute from './routes/cartRoute'
 import orderRoute from './routes/orderRoute'
 import reviewRoute from './routes/reviewRoute'
 import paymentRoute from './routes/paymentRoute'
+import discussionRoute from './routes/discussionRoute'
 
 dotenv.config({ override: true })
 
@@ -31,6 +32,7 @@ app.use('/api/cart', cartRoute)
 app.use('/api/orders', orderRoute)
 app.use('/api/reviews', reviewRoute)
 app.use('/api/payments', paymentRoute)
+app.use('/api/discussions', discussionRoute)
 
 app.get('/', (req: Request, res: Response) => {
     res.json({ message: 'Server đang chạy!' })
@@ -55,4 +57,4 @@ mongoose
     })
     .catch((err) => {
         console.log('Kết nối MongoDB thất bại:', err)
-    })
+    })

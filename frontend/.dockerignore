@@ -1,0 +1,14 @@
+# frontend/.dockerignore
+# ======================================================
+# Mục đích: Loại trừ file không cần thiết khi build Docker
+# ======================================================
+
+node_modules
+.next
+.env
+.env.*
+.git
+.gitignore
+*.md
+Dockerfile
+.dockerignore

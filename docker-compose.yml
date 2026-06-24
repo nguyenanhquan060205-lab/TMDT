@@ -1,0 +1,46 @@
+# docker-compose.yml
+# ======================================================
+# Mục đích: Chạy toàn bộ hệ thống (Backend + Frontend) chỉ với 1 lệnh duy nhất
+#
+# Cách dùng:
+#   docker compose up --build
+#
+# Sau đó:
+#   - Frontend: http://localhost:3000
+#   - Backend:  http://localhost:5000
+# ======================================================
+
+services:
+
+  # ---------- Backend ----------
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: huit-backend
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - NODE_ENV=production
+      # ⚠️ THAY ĐỔI: Nhập đúng MONGODB_URI của bạn (dùng URL Atlas trên cloud)
+      - MONGODB_URI=${MONGODB_URI}
+      # ⚠️ THAY ĐỔI: JWT_SECRET của bạn
+      - JWT_SECRET=${JWT_SECRET}
+    restart: unless-stopped
+
+  # ---------- Frontend ----------
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: huit-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      # API_URL trỏ tới backend service (Docker DNS tự động resolve tên service)
+      - API_URL=http://backend:5000/api
+    depends_on:
+      - backend
+    restart: unless-stopped

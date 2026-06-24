@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { Suspense, useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import { Filter, Loader2, Search as SearchIcon, SlidersHorizontal, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -12,7 +12,7 @@ interface Category {
   tenDM: string
 }
 
-export default function ProductsPage() {
+function ProductsPageContent() {
   const searchParams = useSearchParams()
   const [products, setProducts] = useState([])
   const [categories, setCategories] = useState<Category[]>([])
@@ -226,5 +226,13 @@ export default function ProductsPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function ProductsPage() {
+  return (
+    <Suspense fallback={null}>
+      <ProductsPageContent />
+    </Suspense>
   )
 }
