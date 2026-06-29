@@ -1,4 +1,5 @@
-"use client"
+import os
+content = '''"use client"
 
 import { useState } from "react"
 import Link from "next/link"
@@ -97,3 +98,7 @@ export default function LoginPage() {
     </div>
   )
 }
+'''
+with open('frontend/src/app/auth/login/page.tsx', 'w', encoding='utf-8') as f:
+    f.write(content.strip() + '\n')
+print('Login page updated!')

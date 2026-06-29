@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { Providers } from "@/components/providers";
+
 
 // Cấu hình font Geist Sans từ Google Fonts
 const geistSans = Geist({
@@ -34,12 +36,14 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        {/* Thanh điều hướng trên cùng */}
-        <Navbar />
-        {/* Nội dung chính - flex-1 để chiếm hết không gian còn lại */}
-        <main className="flex-1">{children}</main>
-        {/* Chân trang dưới cùng */}
-        <Footer />
+        <Providers>
+          {/* Thanh điều hướng trên cùng */}
+          <Navbar />
+          {/* Nội dung chính - flex-1 để chiếm hết không gian còn lại */}
+          <main className="flex-1">{children}</main>
+          {/* Chân trang dưới cùng */}
+          <Footer />
+        </Providers>
       </body>
     </html>
   );
