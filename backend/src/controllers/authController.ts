@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import bcrypt from 'bcryptjs'
 import User from '../models/usersModel'
+import { AuthRequest } from '../middlewares/authMiddleware'
 import { generateToken } from '../utils/jwt'
 
 export const register = async (req: Request, res: Response) => {
@@ -19,7 +20,7 @@ export const login = async (req: Request, res: Response) => {
         const { taiKhoan, matKhau } = req.body
         const user = await User.findOne({ taiKhoan })
         if (!user) { res.status(400).json({ message: 'Tai khoan khong ton tai!' }); return }
-        if (!(await bcrypt.compare(matKhau, user!.matKhau))) { res.status(400).json({ message: 'Mat khau khong dung!' }); return }
+        if (!(await bcrypt.compare(matKhau, user!.matKhau!))) { res.status(400).json({ message: 'Mat khau khong dung!' }); return }
         res.json({ message: 'Dang nhap thanh cong!', token: generateToken(user._id.toString(), user.vaiTro), user: { id: user._id, hoTen: user.hoTen, taiKhoan: user.taiKhoan, email: user.email, vaiTro: user.vaiTro } })
     } catch (error: unknown) { console.error('[login] error:', error); res.status(500).json({ message: 'Loi server!', error: (error as Error).message }) }
 }
@@ -56,7 +57,7 @@ export const facebookLogin = async (req: Request, res: Response) => {
     } catch (error: unknown) { console.error('[facebookLogin] error:', error); res.status(500).json({ message: 'Loi xac thuc Facebook!', error: (error as Error).message }) }
 }
 
-export const getMe = async (req: Request, res: Response) => {
+export const getMe = async (req: AuthRequest, res: Response) => {
     try { const user = await User.findById(req.user.id).select('-matKhau'); res.json(user) }
     catch (error: unknown) { res.status(500).json({ message: 'Loi server!', error: (error as Error).message }) }
 }
